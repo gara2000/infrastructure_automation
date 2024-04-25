@@ -6,7 +6,7 @@ on:
     paths:
       - src/app/*
       - Dockerfile
-      - *
+      - .github/workflows/main.yml
 
   workflow_dispatch:
 
