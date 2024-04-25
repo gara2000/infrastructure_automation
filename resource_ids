@@ -1,7 +1,0 @@
-vpc_id:vpc-08ccb1386429e7a93
-subnet_id:subnet-094baffc14c39ef44
-sg_id:sg-043dff95c30747417
-igw_id:igw-0640feb0dcb23ba77
-rtb_id:rtb-087e8e9fbf74cf04f
-key_pair_name:MlopsKeyPair
-i_id:i-0ad10e365c78eb8ca
