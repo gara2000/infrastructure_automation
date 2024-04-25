@@ -6,12 +6,11 @@ on:
     paths:
       - src/app/*
       - Dockerfile
-      - .github/workflows/main.yml
 
   workflow_dispatch:
 
 jobs:
-  whatever:
+  build:
     runs-on: ubuntu-latest
     steps:
 
@@ -30,3 +29,6 @@ jobs:
         context: ./
         tags: ghcr.io/gara2000/flask-app:latest
         push: true           
+  deploy:
+    needs: build
+    runs-on: []
