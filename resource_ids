@@ -1,7 +1,7 @@
-vpc_id:vpc-0a1c27ae998d39535
-subnet_id:subnet-09facaad9251f704d
-sg_id:sg-00080afafd37f3477
-igw_id:igw-058b92ac56a0e238b
-rtb_id:rtb-0d12be93b7fe9b601
+vpc_id:vpc-08ccb1386429e7a93
+subnet_id:subnet-094baffc14c39ef44
+sg_id:sg-043dff95c30747417
+igw_id:igw-0640feb0dcb23ba77
+rtb_id:rtb-087e8e9fbf74cf04f
 key_pair_name:MlopsKeyPair
-i_id:i-090dc3b886cb83c4d
+i_id:i-0ad10e365c78eb8ca
