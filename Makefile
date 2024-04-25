@@ -24,4 +24,14 @@ docker-clean:
 	docker rm -f flask-app
 	docker rmi flask-app
 
+infra-build:
+	@echo "---------- Building Infrastructure ----------"
+	automation/build_infra.sh
+	@echo "---------- Infrastructure Built -------------"
+
+infra-clean:
+	@echo "---------- Destroying Infrastructure ----------"
+	automation/clean_infra.sh
+	@echo "---------- Infrastructure Destroyed -----------"
+
 all: install lint

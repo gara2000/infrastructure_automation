@@ -21,7 +21,6 @@ echo "sg_id:$sg_id" >> resource_ids
 # Allow ssh connections 
 rule_id=$(aws ec2 authorize-security-group-ingress --group-id $sg_id --protocol tcp --port 22 --cidr 0.0.0.0/0 --profile admin)
 echo "Rule set: Allow ingress SSH connections"
-echo "rule_id:$rule_id" >> resource_ids
 
 # Create an Internet Gateway
 igw_id=$(aws ec2 create-internet-gateway --query 'InternetGateway.InternetGatewayId' --output text --profile admin )
@@ -42,11 +41,13 @@ route_id=$(aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id 
 echo "Route Added: Route all traffic to the Internet Gateway ($route_id)"
 
 # Create a Key-Pair for the EC2 instance
+KEY_NAME="MlopsKeyPair"
 FILE_NAME="MlopsKeyPair.pem"
 aws ec2 create-key-pair --key-name MlopsKeyPair --query 'KeyMaterial' --output text --profile admin > $FILE_NAME
 echo "Key-pair Created in file: $FILE_NAME"
 chmod 400 $FILE_NAME
 echo "Permission Set"
+echo "key_pair_name:$KEY_NAME" >> resource_ids
 
 # Create EC2 instance
 i_id=$(aws ec2 run-instances --image-id ami-04e5276ebb8451442 --instance-type t2.micro --security-group-ids $sg_id --subnet-id $subnet_id --count 1 --associate-public-ip-address --key-name MlopsKeyPair --query 'Instances[].InstanceId' --output text --profile admin)
