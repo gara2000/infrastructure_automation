@@ -42,7 +42,7 @@ infra-clean:
 
 infra-all: infra-clean infra-build infra-connect
 
-ansible-set-up:
+ansible-configure:
 	@echo "---------- Provisioning EC2 instance ----------"
 	{ \
 		cd ansible ; \

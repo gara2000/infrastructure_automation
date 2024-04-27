@@ -1,0 +1,8 @@
+---
+- name: "Set up a GitHub Actions runner"
+  hosts: all
+  become: no
+
+  roles:
+    - { role: runner }
+

@@ -33,3 +33,5 @@ generate a token for the runner:
 ```bash
 gh api   --method POST   -H "Accept: application/vnd.githu+json"   -H "X-GitHub-Api-Version: 2022-11-28"   /repos/gara2000/mlops_pipeline/actions/runners/registration-token
 ```
+
+**R

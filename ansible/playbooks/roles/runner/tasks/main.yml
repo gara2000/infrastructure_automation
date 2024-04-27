@@ -1,0 +1,18 @@
+- name: Create actions-runner directory
+  file:
+    path: ~/actions-runner
+    state: directory
+
+- name: Download GitHub runner
+  get_url:
+    url: "https://github.com/actions/runner/releases/download/v2.316.0/actions-runner-linux-x64-2.316.0.tar.gz"
+    dest: "~/actions-runner/actions-runner-linux-x64-2.316.0.tar.gz"
+
+- name: Extract GitHub runner
+  shell: "tar xzf ~/actions-runner/actions-runner-linux-x64-2.316.0.tar.gz -C ~/actions-runner/"
+
+- name: Configure GitHub runner
+  shell: "~/actions-runner/config.sh remove --token {{ TOKEN }} && ~/actions-runner/config.sh --url https://github.com/gara2000/mlops_pipeline --token {{ TOKEN }} --unattended"
+
+- name: Run GitHub runner
+  shell: "~/actions-runner/run.sh"
