@@ -41,3 +41,13 @@ infra-clean:
 	@echo "---------- Infrastructure Destroyed -----------"
 
 infra-all: infra-clean infra-build infra-connect
+
+ansible-set-up:
+	@echo "---------- Provisioning EC2 instance ----------"
+	{ \
+		cd ansible ; \
+		./set_node_address.sh ; \
+		ansible-playbook --ask-become-pass playbooks/bootstrap.yml ; \
+		ansible-playbook --ask-become-pass playbooks/docker.yml ; \
+	}
+	@echo "------- Finished Instance Provisioning --------"
