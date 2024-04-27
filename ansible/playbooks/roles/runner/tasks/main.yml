@@ -15,4 +15,4 @@
   shell: "~/actions-runner/config.sh remove --token {{ TOKEN }} && ~/actions-runner/config.sh --url https://github.com/gara2000/mlops_pipeline --token {{ TOKEN }} --unattended"
 
 - name: Run GitHub runner
-  shell: "~/actions-runner/run.sh"
+  shell: "nohup ~/actions-runner/run.sh &"
