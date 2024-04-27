@@ -66,4 +66,4 @@ jobs:
         run: docker rm -f flask-app
         
       - name: Run the container on EC2 instance
-        run: docker run --rm -p 8080:8080 --name flask-app ghcr.io/${{ github.repository_owner }}/flask-app:latest
+        run: docker run -d -p 8080:8080 --name flask-app ghcr.io/${{ github.repository_owner }}/flask-app:latest
