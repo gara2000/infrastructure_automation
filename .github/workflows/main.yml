@@ -53,6 +53,9 @@ jobs:
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
           sudo usermod -aG docker ubuntu
 
+      - name: Testing docker
+        run: docker ps
+
       - name: Pull image from GitHub Registry
         run: docker pull ghcr.io/${{ github.repository_owner }}/flask-app:latest
 
