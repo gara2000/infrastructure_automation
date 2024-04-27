@@ -52,14 +52,12 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-      - name: who am i
-        run: whoami
-
-      - name: Giving permissions for user ubuntu
-        run: sudo usermod -aG docker ubuntu
-
-      - name: Testing docker
-        run: docker ps
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_REGISTRY }}
 
       - name: Pull image from GitHub Registry
         run: docker pull ghcr.io/${{ github.repository_owner }}/flask-app:latest
