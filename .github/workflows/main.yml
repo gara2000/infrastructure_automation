@@ -56,7 +56,7 @@ jobs:
         run: whoami
 
       - name: Giving permissions for user ubuntu
-        runs: sudo usermod -aG docker ubuntu
+        run: sudo usermod -aG docker ubuntu
 
       - name: Testing docker
         run: docker ps
