@@ -9,3 +9,6 @@ This repo can be run in different ways:
     1. **AWS EC2 Instance:** this will deploy the app on an EC2 instance that will be publicly available, the process is fully automated and we take 2 approaches to do the automation (IaC):  
         1. **Using automation scripts:** this uses shell scripts, that runs the AWS commands to set the Cloud architecture  
         2. **Using Terraform:** Terraform is a powerful toul that simplifies IaC, and makes it very organized [TO BE IMPLEMENTED] 
+
+** Provisioning with ansible **
+-> needs ansible, and openssh-server installation

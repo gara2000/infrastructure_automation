@@ -1,0 +1,7 @@
+---
+- name: "Configure Docker on EC2 Instance"
+  hosts: all 
+  become: yes
+
+  roles:
+    - { role: docker }

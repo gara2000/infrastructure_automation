@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  become: true
+
+  tasks:
+    - name: install updates (Ubuntu)
+      tags: always
+      apt:
+        update_cache: yes
+      changed_when: false
+      when: ansible_distribution == "Ubuntu"
