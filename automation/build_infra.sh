@@ -1,5 +1,10 @@
 #!/bin/bash
 
+DIRNAME=$(dirname $0)
+cd $DIRNAME/..
+
+AMI_ID="ami-04b70fa74e45c3917"
+
 # All the resource ids will be put in the resource_ids file
 
 # Create VPC
@@ -48,12 +53,15 @@ echo "Key-pair Created in file: $FILE_NAME"
 chmod 400 $FILE_NAME
 echo "Permission Set"
 echo "key_pair_name:$KEY_NAME" >> resource_ids
+echo "key_pair_file_name:$FILE_NAME" >> resource_ids
 
 # Create EC2 instance
-i_id=$(aws ec2 run-instances --image-id ami-04e5276ebb8451442 --instance-type t2.micro --security-group-ids $sg_id --subnet-id $subnet_id --count 1 --associate-public-ip-address --key-name MlopsKeyPair --query 'Instances[].InstanceId' --output text --profile admin)
+i_id=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t2.micro --security-group-ids $sg_id --subnet-id $subnet_id --count 1 --associate-public-ip-address --key-name MlopsKeyPair --query 'Instances[].InstanceId' --output text --profile admin)
 echo "EC2 Instance Created: $i_id"
 echo "i_id:$i_id" >> resource_ids
 
 # Add tags to all the resources to find them with ease
 aws ec2 create-tags --resources $i_id $rtb_id $igw_id $sg_id $subnet_id $vpc_id --tags Key=Repository,Value=mlops_pipeline Key=Name,Value=MLOps --profile admin
 echo "Tags Set"
+
+cat resource_ids

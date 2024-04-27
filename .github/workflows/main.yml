@@ -6,6 +6,7 @@ on:
     paths:
       - src/app/*
       - Dockerfile
+      - .github/workflows/main.yml
 
   workflow_dispatch:
 
@@ -27,8 +28,21 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./
-        tags: ghcr.io/gara2000/flask-app:latest
+        tags: ghcr.io/${{ github.repository_owner }}/flask-app:latest
         push: true           
+
   deploy:
     needs: build
-    runs-on: []
+    runs-on: [test-runner]
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Pull image from GitHub Registry
+        run: docker pull ghcr.io/${{ github.repository_owner }}/flask-app:latest
+
+      - name: Remove previously run containers if any
+        run: docker rm -f flask-app
+        
+      - name: Run the container on EC2 instance
+        run: docker run --rm -p 8080:8080 --name flask-app ghcr.io/${{ github.repository_owner }}/flask-app:latest

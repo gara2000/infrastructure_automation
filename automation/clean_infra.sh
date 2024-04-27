@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DIRNAME=$(dirname $0)
+cd $DIRNAME/..
+
 SG_ID=$(awk -F ':' '$1 == "sg_id" {print $2}' resource_ids)
 SUBNET_ID=$(awk -F ':' '$1 == "subnet_id" {print $2}' resource_ids)
 RTB_ID=$(awk -F ':' '$1 == "rtb_id" {print $2}' resource_ids)

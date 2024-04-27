@@ -1,9 +1,11 @@
-install:
+local-install:
 	pip3 install --upgrade pip &&\
 		pip3 install -r src/app/requirements.txt
 
-lint:
+local-lint:
 	pylint --disable=R,C src/app/app.py
+
+local-all: install lint
 
 docker-build:
 	docker build -t flask-app .
@@ -29,9 +31,13 @@ infra-build:
 	automation/build_infra.sh
 	@echo "---------- Infrastructure Built -------------"
 
+infra-connect:
+	@echo "---------- Connecting to EC2 isntance ----------"
+	automation/connect_to_instance.sh
+
 infra-clean:
 	@echo "---------- Destroying Infrastructure ----------"
 	automation/clean_infra.sh
 	@echo "---------- Infrastructure Destroyed -----------"
 
-all: install lint
+infra-all: infra-clean infra-build infra-connect
