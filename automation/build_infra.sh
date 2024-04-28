@@ -29,6 +29,9 @@ echo "sg_id:$sg_id" >> resource_ids
 # Allow ssh connections 
 rule_id=$(aws ec2 authorize-security-group-ingress --group-id $sg_id --protocol tcp --port 22 --cidr 0.0.0.0/0 --profile $PROFILE)
 echo "Rule set: Allow ingress SSH connections"
+# Allow tcp traffic on port 8080
+rule_id=$(aws ec2 authorize-security-group-ingress --group-id $sg_id --protocol tcp --port 8080 --cidr 0.0.0.0/0 --profile $PROFILE)
+echo "Rule set: Allow ingress TCP traffic on Port 8080"
 
 # Create an Internet Gateway
 igw_id=$(aws ec2 create-internet-gateway --query 'InternetGateway.InternetGatewayId' --output text --profile $PROFILE )

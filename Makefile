@@ -51,3 +51,16 @@ ansible-configure:
 		ansible-playbook --ask-become-pass playbooks/docker.yml ; \
 	}
 	@echo "------- Finished Instance Provisioning --------"
+
+ansible-runner-config:
+	@echo "----------- Configuring Runner ------------------"
+	{ \
+		cd ansible ; \
+		./set_runner_token.sh ; \
+		ansible-playbook playbooks/runner.yml ; \
+	}
+	@echo "---------- Finished Runner configuration ---------"
+
+ansible-all: ansible-configure ansible-runner-config
+
+all: infra-clean infra-build ansible-configure ansible-runner-config

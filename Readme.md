@@ -36,3 +36,8 @@ gh api   --method POST   -H "Accept: application/vnd.githu+json"   -H "X-GitHub-
 
 **Resources**
 [Nohup Command](https://www.digitalocean.com/community/tutorials/nohup-command-in-linux)
+[GitHub CLI Manual](https://cli.github.com/manual/)
+[AWS CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
+[REST API endpoints for self-hosted runners](https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#get-a-self-hosted-runner-for-a-repository)
+[Ansible Community Documentation](https://docs.ansible.com/)
+[Terraform Community](https://www.terraform.io/)
