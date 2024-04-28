@@ -11,6 +11,7 @@ IGW_ID=$(awk -F ':' '$1 == "igw_id" {print $2}' resource_ids)
 VPC_ID=$(awk -F ':' '$1 == "vpc_id" {print $2}' resource_ids)
 I_ID=$(awk -F ':' '$1 == "i_id" {print $2}' resource_ids)
 KEY_PAIR_NAME=$(awk -F ':' '$1 == "key_pair_name" {print $2}' resource_ids)
+KEY_PAIR_FILE_NAME=$(awk -F ':' '$1 == "key_pair_file_name" {print $2}' resource_ids)
 ACL_ID=$(aws ec2 describe-network-acls --profile $PROFILE --query "NetworkAcls[?Associations[?SubnetId=='$SUBNET_ID']].NetworkAclId" --output text)
 
 # Terminate the EC2 instance
@@ -26,7 +27,7 @@ echo "EC2 instance terminated"
 
 # Delete the key-pair
 aws ec2 delete-key-pair --key-name $KEY_PAIR_NAME --profile $PROFILE 
-rm -f MlopsKeyPair.pem
+rm -f $KEY_PAIR_FILE_NAME
 echo "Key pair deleted"
 
 # Delete the security group

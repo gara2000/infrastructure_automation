@@ -1,4 +1,6 @@
 .venv
-MlopsKeyPair.pem
+*.pem
 resource_ids
 ansible/etc/hosts
+.terraform*
+terraform.tfstate

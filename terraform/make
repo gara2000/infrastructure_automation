@@ -1,0 +1,14 @@
+terraform-apply:
+	@echo "---------- Terraform: Building infrastructure with ------------"
+	{ \
+		cd terraform ; \
+		terraform init ; \
+		terraform apply ; \
+	}
+
+terraform-destroy:
+	@echo "----------- Terraform: Destroying infrastructure -------------"
+	{ \
+		cd terraform ; \
+		terraform destroy ; \
+	}

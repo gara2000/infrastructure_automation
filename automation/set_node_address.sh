@@ -34,15 +34,17 @@ if [ -e "resource_ids" ]; then
     if [ $STATE = 'running' ]; then
         IP=$(aws ec2 describe-instances --query "Reservations[].Instances[?InstanceId=='$I_ID'].PublicIpAddress" --output text --profile $PROFILE)
         USER=ubuntu
-        echo "---------- Adding Instance IP address to the list of ansible nodes ---------"
+        echo "---------- Adding Instance IP address to the list of ansible hosts ---------"
         echo "Instance id: $I_ID"
         echo "Instance public IP: $IP"
         echo "$USER@$IP" > ansible/etc/hosts
         echo "---------- Public IP added successfully! -----------------------------------"
     else
         no_running_instance "Instance is not running, state is $STATE"
+        exit 1
     fi
 else
     no_running_instance "No 'resource_ids' file found!"
+    exit 1
 fi
 

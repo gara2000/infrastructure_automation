@@ -5,8 +5,11 @@ cd $DIRNAME/..
 
 PROFILE="admin"
 AMI_ID="ami-04b70fa74e45c3917"
+TYPE="t2.micro"
 IP_RANGE="10.0.0.0/16"
 SUBNET_IP_RANGE="10.0.1.0/24"
+KEY_NAME="MlopsKeyPair"
+FILE_NAME="$KEY_NAME.pem"
 
 # All the resource ids will be put in the resource_ids file
 
@@ -52,9 +55,7 @@ route_id=$(aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id 
 echo "Route Added: Route all traffic to the Internet Gateway ($route_id)"
 
 # Create a Key-Pair for the EC2 instance
-KEY_NAME="MlopsKeyPair"
-FILE_NAME="MlopsKeyPair.pem"
-aws ec2 create-key-pair --key-name MlopsKeyPair --query 'KeyMaterial' --output text --profile $PROFILE > $FILE_NAME
+aws ec2 create-key-pair --key-name $KEY_NAME --query 'KeyMaterial' --output text --profile $PROFILE > $FILE_NAME
 echo "Key-pair Created in file: $FILE_NAME"
 chmod 400 $FILE_NAME
 echo "Permission Set"
@@ -62,7 +63,7 @@ echo "key_pair_name:$KEY_NAME" >> resource_ids
 echo "key_pair_file_name:$FILE_NAME" >> resource_ids
 
 # Create EC2 instance
-i_id=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t2.micro --security-group-ids $sg_id --subnet-id $subnet_id --count 1 --associate-public-ip-address --key-name MlopsKeyPair --query 'Instances[].InstanceId' --output text --profile $PROFILE)
+i_id=$(aws ec2 run-instances --image-id $AMI_ID --instance-type $TYPE --security-group-ids $sg_id --subnet-id $subnet_id --count 1 --associate-public-ip-address --key-name $KEY_NAME --query 'Instances[].InstanceId' --output text --profile $PROFILE)
 echo "EC2 Instance Created: $i_id"
 echo "i_id:$i_id" >> resource_ids
 
@@ -70,4 +71,9 @@ echo "i_id:$i_id" >> resource_ids
 aws ec2 create-tags --resources $i_id $rtb_id $igw_id $sg_id $subnet_id $vpc_id --tags Key=Repository,Value=mlops_pipeline Key=Name,Value=MLOps --profile $PROFILE
 echo "Tags Set"
 
+echo "--- Created following resources ---"
 cat resource_ids
+
+echo "--- Setting up Public IP for ansible ---"
+automation/set_node_address.sh
+echo "--- Configuration completed: You can use Ansible to provision your EC2 Instance! ---"
