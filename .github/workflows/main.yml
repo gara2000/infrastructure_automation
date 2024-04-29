@@ -46,6 +46,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_REGISTRY }}
 
+      - name: Change permissions on Docker socket
+        run: sudo chmod 666 /var/run/docker.sock
+
       - name: Pull image from GitHub Registry
         run: docker pull ghcr.io/${{ github.repository_owner }}/flask-app:latest
 
