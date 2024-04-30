@@ -90,6 +90,8 @@ git push -u origin main
 Now in your GitHub repository go to "Actions"
 ![actions](assets/actions.png)
 You should see the workflow running
+![triggering][assets/triggering.png]
+Don't hesitate to click on it and inspect the details!
 
 
 ## 3- Repository content in depth
