@@ -119,6 +119,7 @@ Find the scripts under the `automation/` directory.
 ```bash
 make auto-build
 ```
+Check my [medium article](https://medium.com/@firasgara/launch-an-aws-ec2-instance-in-a-custom-vpc-with-the-cli-028589d28db7) for a detailed step by step creation of the infrastructure on AWS.
 - `automation/connect_to_instance.sh` : connects to the AWS EC2 instance previously created
 ```bash
 make auto-connect
