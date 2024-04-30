@@ -3,4 +3,4 @@
 resource_ids
 ansible/etc/hosts
 .terraform*
-terraform.tfstate
+terraform*

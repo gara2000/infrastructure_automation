@@ -1,14 +1,14 @@
 terraform-apply:
 	@echo "---------- Terraform: Building infrastructure with ------------"
 	{ \
-		cd terraform ; \
+		cd Terraform ; \
 		terraform init ; \
-		terraform apply ; \
+		terraform apply -auto-approve ; \
 	}
 
 terraform-destroy:
 	@echo "----------- Terraform: Destroying infrastructure -------------"
 	{ \
-		cd terraform ; \
-		terraform destroy ; \
+		cd Terraform ; \
+		terraform destroy -auto-approve ; \
 	}

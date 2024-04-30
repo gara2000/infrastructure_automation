@@ -7,7 +7,7 @@ on:
       - docker/app/*
       - docker/Dockerfile
       - .github/workflows/main.yml
-      - automation/*
+      - trigger
 
   workflow_dispatch:
 

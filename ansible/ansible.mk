@@ -1,9 +1,8 @@
-ansible-configure:
+ansible-provision:
 	@echo "---------- Provisioning EC2 instance ----------"
 	{ \
 		cd ansible ; \
 		ansible-playbook --ask-become-pass playbooks/bootstrap.yml ; \
-		ansible-playbook --ask-become-pass playbooks/docker.yml ; \
 	}
 	@echo "------- Finished Instance Provisioning --------"
 
@@ -16,4 +15,4 @@ ansible-runner-config:
 	}
 	@echo "---------- Finished Runner configuration ---------"
 
-ansible-all: ansible-configure ansible-runner-config
+ansible-all: ansible-provision ansible-runner-config

@@ -10,3 +10,10 @@
         update_cache: yes
       changed_when: false
       when: ansible_distribution == "Ubuntu"
+
+- name: "Configure Docker on EC2 Instance"
+  hosts: all 
+  become: true
+
+  roles:
+    - { role: docker }

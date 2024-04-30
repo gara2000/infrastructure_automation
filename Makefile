@@ -1,7 +1,7 @@
-include automation/make
-include ansible/make
-include terraform/make
-include docker/make
+include automation/automate_script.mk
+include ansible/ansible.mk
+include Terraform/automate_tf.mk
+include docker/docker.mk
 
 local-install:
 	pip3 install --upgrade pip &&\
