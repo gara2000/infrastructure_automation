@@ -56,7 +56,7 @@ aws s3 ls --profile admin
 2. GitHub authentication: refer to this [GitHub authentication guide](https://cli.github.com/manual/gh_auth_login)
 
 ## 2- Getting started
-In this repository, the whole workflow is fully automated, the creation of the infrastructure the provisioning of the remote server and the building and the deployment of the application running the model, can all few command runs.  
+In this repository, the whole workflow is fully automated, the creation of the infrastructure the provisioning of the remote server and the building and the deployment of the application running the model, all of only needs 3 command: a `terraform apply`, an `ansible-playbook` and a `git push`.
 **Note**: to go in depth on how every thing is set up please check the next section [Repository content in depth](#3--repository-content-in-depth)
 
 ### Fork repository
