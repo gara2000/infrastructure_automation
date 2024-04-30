@@ -62,6 +62,7 @@ In this repository, the whole workflow is fully automated, the creation of the i
 ### Fork repository
 To be able to enjoy the full potential of this repository, and be able to run the GitHub Actions workflows (CI/CD pipeline), you need to fork the repository, this can be done in two mouse-clicks
 ![Fork Repo](assets/forkrepo.png)
+And then
 ![Create fork](assets/create_fork_repo.png)
 
 ### Authentication
