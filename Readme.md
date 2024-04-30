@@ -1,6 +1,5 @@
 # MLOps Pipeline
-This is a fully automated MLOps workflow, it includes Cloud infrastructure configuration with automation scripts and with Terraform, remote server provisioning with Ansible, model packaging and deployment with Docker. It also includes a CI/CD pipeline, for automatically packaging the model into Docker container, push it to a registry and automatically deploy it on an AWS EC2 Webserver.  
-In this documentation I explain the step by step workflow, in separate sections.
+This is a **fully automated** MLOps workflow, it includes Cloud infrastructure configuration with **automation scripts** and with **Terraform**, remote server provisioning with **Ansible**, model packaging and deployment with **Docker**. It also includes a **CI/CD pipeline**, for automatically packaging the model into Docker container, push it to a registry and automatically deploy it on an **AWS EC2** Webserver.  
 
 <br/>
 
