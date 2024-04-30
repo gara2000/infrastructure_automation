@@ -25,11 +25,7 @@ This is a **fully automated** MLOps workflow, it includes Cloud infrastructure c
 
 ## 1- Project requirements
 
-
-
-### Authentication requirements
-
-#### Required packages
+### Required packages
 1. **Operating System**: all the commands and scripts run in this project are in Linux OS
 2. **Terraform**: refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/install?product_intent=terraform)
 3. **Ansible**:  refer to the [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).  
@@ -38,6 +34,7 @@ Also make sure you have **openssh-server** installed on your computer, for ansib
 sudo apt install -y openssh-server
 ```
 
+### Authentication requirements
 #### Authentication to AWS account
 In order to be able to create and manage AWS resources you have to authenticate to your AWS account  
 
