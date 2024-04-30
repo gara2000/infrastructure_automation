@@ -11,3 +11,9 @@ local-lint:
 	pylint --disable=R,C docker/app/app.py
 
 local-all: install lint
+
+ip:
+	test_scripts/get_ip.sh
+
+curl:
+	test_scripts/curl_webserver.sh

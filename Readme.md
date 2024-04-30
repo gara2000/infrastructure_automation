@@ -103,6 +103,11 @@ You should see the workflow running
 ![triggering](assets/triggering.png)
 Don't hesitate to click on it and inspect the details!
 
+### Access our Webserver
+Now everything is in place and anyone can browse to our webserver on port 8080 using its public IP address.  
+Run `make ip` to retrieve the ip address of the server  
+Run `make curl` to curl the webserver 
+
 
 ## 3- Repository content in depth
 
