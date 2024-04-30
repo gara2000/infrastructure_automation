@@ -7,26 +7,39 @@ In this documentation I explain the step by step workflow, in separate sections.
 **TABLE OF CONTENTS**
 <!-- TOC depthFrom:2 -->
 
-- [1- Authentication requirements](#1--authentication-requirements)
+- [1- Project requirements](#1--project-requirements)
 
 - [2- Getting started](#2--getting-started)
 
 - [3- Repository content in depth](#3--repository-content-in-depth)
+    - [3.1- Infrastructure as Code](#31--infrastructure-as-code)
+    - [3.2- Ansible Playbooks](#32--ansible-playbooks)
+    - [3.3- Contanerization with Docker](#33--containerization-with-docker)
+    - [3.4- CI/CD pipeline](#34--cicd-pipeline)
 
-
-- [2- Contenu du site](#2--contenu-du-site)
-- [3- Errata : au secours quelque chose ne fonctionne pas !](#3--errata--au-secours-quelque-chose-ne-fonctionne-pas-)
-- [4- Contenu chapitre par chapitre](#4--contenu-chapitre-par-chapitre)
-- [5- Articles complémentaires](#5--articles-complémentaires)
+- [4- Additional resources](#4--additional-resources)
 
 <!-- /TOC -->
 
 
 <br/>
 
-## 1- Authentication requirements
+## 1- Project requirements
 
-### Authentication to AWS account
+
+
+### Authentication requirements
+
+#### Required packages
+1. **Operating System**: all the commands and scripts run in this project are in Linux OS
+2. **Terraform**: refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/install?product_intent=terraform)
+3. **Ansible**:  refer to the [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).  
+Also make sure you have **openssh-server** installed on your computer, for ansible to be able to SSH into the EC2 instance.
+```bash
+sudo apt install -y openssh-server
+```
+
+#### Authentication to AWS account
 In order to be able to create and manage AWS resources you have to authenticate to your AWS account  
 
 1. **AWS CLI installation**: refer to the [AWS CLI installation guide](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-install.html)
@@ -41,7 +54,7 @@ aws s3 ls --profile admin
 ```
 **Note:** all of the actions performed in this repository are **Free-Tier elligible**
 
-### Authentication to GitHub CLI
+#### Authentication to GitHub CLI
 1. GitHub CLI installation: refer to the [GitHub installation guide](https://github.com/cli/cli#installation)
 
 2. GitHub authentication: refer to this [GitHub authentication guide](https://cli.github.com/manual/gh_auth_login)
@@ -56,7 +69,7 @@ To be able to enjoy the full potential of this repository, and be able to run th
 ![Create fork](assets/create_fork_repo.png)
 
 ### Authentication
-To be able to run the IaC scripts, you need to authenticate to AWS, and to be able to deploy the model using the CD you need authentication for the GitHub CLI. Please refer to the [Authentication section](#1--authentication-requirements).
+To be able to run the IaC scripts, you need to authenticate to AWS, and to be able to deploy the model using the CD you need authentication for the GitHub CLI. Please refer to the [Authentication section](#authentication-requirements).
 
 Once you're authentication is done, you should be good to start!
 
@@ -69,12 +82,12 @@ make terraform-apply
 ```
 
 ### Provision the newly created instance with Ansible
-In this step we will perform the necessary configurations to our EC2 Instance, in particular, we will run an update, we will install Docker and we will Configure the GitHub Actions runner needed for the CD pipeline.  
+In this step we will perform the necessary configurations to our EC2 Instance, in particular, we will run an update, we will install Docker and we will configure the GitHub Actions runner needed for the CD pipeline.  
 Run the following command so that Ansible can do all of this for us:
 ```bash
 make ansible-all
 ```
-you'll be prompted to enter your sudo password, since it needs elevated privileges to run commands like update and install. Once this is done ansible will fully configure the server for you.
+you'll be prompted to enter your sudo password, since Ansible needs elevated privileges to run commands like update and install. Once this is done ansible will fully configure the server for you.
 
 ### Continuous Integration / Continuous Deployment
 Now that every thing is set, we can run our CI/CD pipline. What makes a CI/CD so powerfull is that it can run automatically when we push changes to the repository (e.g. the application code has changed, new data has been introduced ...). To trigger a change let's run this simple echo command that will add text to a file:
@@ -87,7 +100,7 @@ git add trigger
 git commit -m "triggering our CI/CD pipeline"
 git push -u origin main
 ```
-Now in your GitHub repository go to "Actions"
+In your GitHub repository go to "Actions"
 ![actions](assets/actions.png)
 You should see the workflow running
 ![triggering](assets/triggering.png)
@@ -96,31 +109,64 @@ Don't hesitate to click on it and inspect the details!
 
 ## 3- Repository content in depth
 
-
-
-This repo can be run in different ways:
-1. **Locally in a Python virtual environment:** you can run the application containing the model locally with python, for this we create a Python virtual environment.  
-2. **Locally with Docker:** you can create the docker image of the flask-application running the model locally and test the model with the script "predict.sh" [TO BE IMPLEMENTED]  
-3. **Cloud Solutions:**  
-    1. **AWS EC2 Instance:** this will deploy the app on an EC2 instance that will be publicly available, the process is fully automated and we take 2 approaches to do the automation (IaC):  
-        1. **Using automation scripts:** this uses shell scripts, that runs the AWS commands to set the Cloud architecture  
-        2. **Using Terraform:** Terraform is a powerful toul that simplifies IaC, and makes it very organized [TO BE IMPLEMENTED] 
-
-** Provisioning with ansible **
--> needs ansible, and openssh-server installation
-
-## Authentication
-
-**Side Note**
-generate a token for the runner:
+### 3.1- Infrastructure as Code
+In this repository we offer two ways of running IaC, the first is using shell scripts, I would call this the rough way. The second is using Terraform, this is the easy yet better way of doing things.
+#### IaC with shell scripts
+Find the scripts under the `automation/` directory.  
+- `automation/build_infra.sh` : builds the infrastructure on AWS
 ```bash
-gh api   --method POST   -H "Accept: application/vnd.githu+json"   -H "X-GitHub-Api-Version: 2022-11-28"   /repos/gara2000/mlops_pipeline/actions/runners/registration-token
+make auto-build
+```
+- `automation/connect_to_instance.sh` : connects to the AWS EC2 instance previously created
+```bash
+make auto-connect
+```
+- `automation/set_node_address.sh` : adds the IP address of the EC2 instance to the list of hosts provisioned by ansible.
+- `automation/clean_infra.sh` : destroys the infrastructure previously created on AWS
+```bash
+make auto-clean
+```
+#### IaC with Terraform
+With Terraform things are way more easy and better organized, also we do not need to create any cleaning scripts as Terraform does that on our behalf by always keeping track of the state of our infrastructure.  
+We create a Terraform module called `ec2_instance`, that does all the network, security configuration and runs the EC2 instance.
+Run command `make terraform-apply` to create the infrastructure, and `make terraform-destroy` to destroy it.
+
+### 3.2- Ansible Playbooks
+Ansible is a very powerfull tool, that automates provisioning, configuration management, orchestration and many other IT processes.  
+In this project we have two playbooks
+- Instance configuration (see `ansible/playbooks/bootstrap.yml` and `ansible/playbooks/roles/docker`): runs an update on our instance, installs docker, and adds the `ubuntu` user to the `docker` group to be able to run Docker commands.
+- GitHub Actions runner configuration (see `ansible/playbooks/runner.yml` and `ansible/playbooks/roles/runner`): configures the self-hosted GitHub runner that runs the CD workflow.
+
+### 3.3- Containerization with Docker
+We use Docker to containerize our Flask application, in order to easily deploy it on the AWS EC2 instance.  
+For this we use a simple Dockerfile located under the `docker` subdirectory  
+- Build the image locally:
+```bash
+make docker-build
+```
+- Run the container locally:
+```bash
+make docker-run
+```
+- Stop the container: 
+```bash
+make docker-stop
+```
+- Clean up:
+```bash
+make docker-clean
 ```
 
-**Resources**
-[Nohup Command](https://www.digitalocean.com/community/tutorials/nohup-command-in-linux)
-[GitHub CLI Manual](https://cli.github.com/manual/)
-[AWS CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
-[REST API endpoints for self-hosted runners](https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#get-a-self-hosted-runner-for-a-repository)
-[Ansible Community Documentation](https://docs.ansible.com/)
-[Terraform Community](https://www.terraform.io/)
+### 3.4- CI/CD pipeline
+We use GitHub Actions to automate the process of continuously building the application container and continuously deployingn it on our Cloud Infrastructure.  
+The pipeline is defined in the file `.github/workflows/main.yml`, it contains 2 separate jobs:
+- the **build** job: builds the docker image containing our Flask application, it then pushes it to the GitHub Registry
+- the **deploy** job: pulls the Docker image from the GitHub Registry, and runs the container on our AWS EC2 instance
+
+## 4- Additional Resources
+[Nohup Command](https://www.digitalocean.com/community/tutorials/nohup-command-in-linux)  
+[GitHub CLI Manual](https://cli.github.com/manual/)  
+[AWS CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)  
+[REST API endpoints for self-hosted runners](https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#get-a-self-hosted-runner-for-a-repository)  
+[Ansible Community Documentation](https://docs.ansible.com/)  
+[Terraform Community](https://www.terraform.io/)  
