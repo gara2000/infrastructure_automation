@@ -189,10 +189,10 @@ The pipeline is defined in the file `.github/workflows/main.yml`, it contains 2 
 - the **deploy** job: Pulls the Docker image from the GitHub Registry, and runs the container on our AWS EC2 instance.
 
 ## 4- Additional Resources
-[Step by Step tutorial for building AWS EC2 instance in a custom network configuration](https://medium.com/@firasgara/launch-an-aws-ec2-instance-in-a-custom-vpc-with-the-cli-028589d28db7)   
-[Nohup Command](https://www.digitalocean.com/community/tutorials/nohup-command-in-linux)  
-[GitHub CLI Manual](https://cli.github.com/manual/)  
-[AWS CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)  
-[REST API endpoints for self-hosted runners](https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#get-a-self-hosted-runner-for-a-repository)  
-[Ansible Community Documentation](https://docs.ansible.com/)  
-[Terraform Community](https://www.terraform.io/)  
+- [Step by Step tutorial for building AWS EC2 instance in a custom network configuration](https://medium.com/@firasgara/launch-an-aws-ec2-instance-in-a-custom-vpc-with-the-cli-028589d28db7)   
+- [Nohup Command](https://www.digitalocean.com/community/tutorials/nohup-command-in-linux)  
+- [GitHub CLI Manual](https://cli.github.com/manual/)  
+- [AWS CLI Documentation](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)  
+- [REST API endpoints for self-hosted runners](https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#get-a-self-hosted-runner-for-a-repository)  
+- [Ansible Community Documentation](https://docs.ansible.com/)  
+- [Terraform Community](https://www.terraform.io/)  
