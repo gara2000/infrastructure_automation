@@ -7,6 +7,7 @@ HOST=$(./get_ip.sh)
 PORT=8080
 echo "==== Curling the Home page ===="
 curl "http://$HOST:$PORT"
+echo
 
 echo "==== Making a prediction ===="
 # POST method predict
