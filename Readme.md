@@ -1,5 +1,5 @@
 # MLOps Pipeline
-This is a **fully automated** workflow for packaging and deploying a Machine Learning model. It includes Cloud infrastructure configuration with **automation scripts** and with **Terraform**, remote server provisioning with **Ansible**, and model packaging and deployment with **Docker**. It also includes a **CI/CD pipeline** for automatically packaging the model into a Docker container, pushing it to a registry, and automatically deploying it on an **AWS EC2** Webserver.
+This is a **fully automated** workflow for packaging and deploying a Machine Learning model. It includes Cloud infrastructure configuration with **automation scripts** and with **Terraform**, remote server provisioning with **Ansible**, and model packaging and deployment with **Docker**. It also includes a **CI/CD pipeline** for automatically packaging the model into a Docker container, pushing it to a **GitHub Packages** registry, and automatically deploying it on an **AWS EC2** Webserver.
 
 ![graph](assets/graph.png)
 
@@ -111,6 +111,11 @@ Now everything is in place and anyone can browse to our webserver on port 8080 u
 Run `make ip` to retrieve the ip address of the server. 
 Run `make curl` to curl the webserver for a prediction example.
 
+### Clean-up
+Thanks to Terraform, destroying the infrastructure cannot be more easy.
+```bash
+make terraform-destroy
+```
 
 ## 3- Repository content in depth
 
