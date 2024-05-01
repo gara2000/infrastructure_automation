@@ -4,3 +4,4 @@ resource_ids
 ansible/etc/hosts
 .terraform*
 terraform*
+ansible/playbooks/roles/runner/vars/main.yml
