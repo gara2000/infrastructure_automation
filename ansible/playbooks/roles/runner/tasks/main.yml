@@ -14,5 +14,12 @@
 - name: Configure GitHub runner
   shell: "~/actions-runner/config.sh remove --token {{ TOKEN }} && ~/actions-runner/config.sh --url https://github.com/gara2000/infrastructure_automation --token {{ TOKEN }} --unattended"
 
-- name: Run GitHub runner
-  shell: "nohup ~/actions-runner/run.sh &"
+# - name: Run GitHub runner
+#   shell: "nohup ~/actions-runner/run.sh &"
+
+- name: Start GitHub Actions self-hosted runner
+  shell: "nohup /home/ubuntu/actions-runner/run.sh > /home/ubuntu/actions-runner/log.out 2>&1 &"
+  args:
+    chdir: /home/ubuntu/actions-runner
+  async: 1
+  poll: 0
