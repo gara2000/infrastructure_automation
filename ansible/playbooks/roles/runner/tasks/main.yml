@@ -12,7 +12,7 @@
   shell: "tar xzf ~/actions-runner/actions-runner-linux-x64-2.316.0.tar.gz -C ~/actions-runner/"
 
 - name: Configure GitHub runner
-  shell: "~/actions-runner/config.sh remove --token {{ TOKEN }} && ~/actions-runner/config.sh --url https://github.com/gara2000/mlops_pipeline --token {{ TOKEN }} --unattended"
+  shell: "~/actions-runner/config.sh remove --token {{ TOKEN }} && ~/actions-runner/config.sh --url https://github.com/gara2000/infrastructure_automation --token {{ TOKEN }} --unattended"
 
 - name: Run GitHub runner
   shell: "nohup ~/actions-runner/run.sh &"
